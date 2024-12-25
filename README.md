@@ -79,6 +79,16 @@ java 4種引用類型：
 https://blog.csdn.net/csdn_20150804/article/details/103748869  
 
 
+## ReentrantLock
+
+1. 介紹 java.util.concurrent.locks package 下面 ReentrantLock 的類別，它是屬於 Lock 的一種實作，其實 ReentrantLock 相似於前面幾天所提到的 Synchronized。它們之間主要的差別在於 ReentrantLock 有 Lock 和 Unlock 開發程式的人要自已的控制鎖， Synchronized 會自動的幫我們控制鎖。
+2. ReentrantLock 類別主要提供了 lock()、unlock()、newCondition()、tryLock()…等等的方法，今天主要是介紹使用 lock 和 unlock 方法。
+3. lock 方法主要是要把保護的變數鎖圯來，然後 unlock 方法主要是把鎖打開來，讓其它的執行緒去取得共享變數的存取。
+
+https://ithelp.ithome.com.tw/m/articles/10205898  
+
+
+
 
 
 
