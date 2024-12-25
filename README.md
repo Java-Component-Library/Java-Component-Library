@@ -61,3 +61,24 @@ https://ithelp.ithome.com.tw/m/articles/10207124
 2. sychronize 速度非常慢, 因為其他線程被卡死了
  
 https://blog.csdn.net/small_love/article/details/111058977  
+
+
+## WeakReference 
+
+java 4種引用類型：
+1. 強：A a=new A(); 此時引用a強引用物件A；不會被GC
+2. 軟：SoftReference.java，在記憶體不夠時引用物件會被GC；
+3. 弱：WeakReference.java，每次GC都會被回收；
+4. 虛：PhantomReference.java，每次GC都會被回收；
+
+弱引用指向的對象，每次GC時，物件都會被當作垃圾回收。
+![image](https://github.com/user-attachments/assets/06f41119-7d23-4f79-b369-d1371c0408b5)
+- RoleDTO role = new RoleDTO();此role變數屬於強引用，GC發生後，它指向的物件不被回收；透過後邊列印，已經證明；
+- WeakReference< RoleDTO> weakReference= new WeakReference<>(new RoleDTO());此weakReference是弱引用，GC發生後，它指向的物件被回收，透過列印輸出已經證明。
+
+https://blog.csdn.net/csdn_20150804/article/details/103748869  
+
+
+
+
+
