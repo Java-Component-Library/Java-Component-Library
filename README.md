@@ -23,3 +23,41 @@ Executors 提供了 newCacheThreadPool、newFixThreadPool、newSingleThreadExecu
 - newSingleThreadScheduledExecutor：執行緒 pool 只會有一個執行緒可以按照 scheduler 的排程去執行
 
 https://ithelp.ithome.com.tw/m/articles/10207124 
+
+
+## AtomicReference(AtomicInteger, AtomicBoolean, AtomicLong)
+
+1. 透過對 AtomicInteger、AtomicBoolean 和 AtomicLong 分析我們發現，這三個原子類只能對單一變數進行原子操作，那麼我們如果要對多個變數進行原子操作，這三個類別就無法實現了。那如果要進行多個變數進行原子操作呢？操作方式就是，先把 多個變數封裝成一個類，然後再透過 AtomicReference 進行操作。
+2. 眾所周知，物件的引用其實是一個4位元組的數字，代表在JVM堆記憶體中的引用位址，對一個4位元組數字的讀取操作和寫入操作本身就是原子性的，通常情況下，我們物件參考的操作一般都是取得該參考或重新賦值（寫入操作），我們也沒有辦法對物件所引用的4位元組數字進行加減乘除運算，那麼為什麼JDK要提供AtomicReference類別來支援參考型的原子性操作呢？
+3. AtomicReference的應用場景
+這裡透過設計一個個人銀行帳號資金變化的場景，逐漸引入AtomicReference的使用，該實例有些特殊，需要滿足以下幾點要求。
+
+- 個人帳號被設計為不可變對象，一旦建立就無法進行修改。
+- 個人帳號類別只包含兩個欄位：帳號名稱、現金數字。
+- 為了方便驗證，我們約定個人帳號的現金只能增加而不能減少。
+- 根據前兩個要求，我們簡單設計一個代表個人銀行帳號的Java類DebitCard，該類別將被設計為不可變。  
+
+
+- AtomicReference的基本用法
+  - 建立 AtomicReference
+  - AtomicReference是一個泛型類，它的構造與其他原子類型的構造一樣，也提供了無參和一個有參的構造函數。
+  - AtomicReference()：當使用無參構造函數來建立AtomicReference物件的時候，需要再次呼叫set()方法為AtomicReference內部的value指定初始值。
+  - AtomicReference(V initialValue)：建立AtomicReference物件時順便指定初始值。
+- 常用方法
+  - compareAndSet(V expect, V update)：原子性地更新AtomicReference內部的value值，其中expect代表目前AtomicReference的value值，update則是需要設定的新參考值。此方法會傳回一個boolean的結果，當expect和AtomicReference的目前值不相等時，修改會失敗，傳回值為false，若修改成功則會回傳true。
+  - getAndSet(V newValue)：原子性地更新AtomicReference內部的value值，並且傳回AtomicReference的舊值。
+  - getAndUpdate(UnaryOperator<V> updateFunction)：原子性地更新value值，並且傳回AtomicReference的舊值，該方法需要傳入一個Function介面。
+  - updateAndGet(UnaryOperator<V> updateFunction)：原子性地更新value值，並且傳回AtomicReference更新後的新值，該方法需要傳入一個Function介面。
+  - getAndAccumulate(V x, BinaryOperator<V> accumulatorFunction)：原子性地更新value值，並且傳回AtomicReference更新前的舊值。此方法需要傳入兩個參數，第一個是更新後的新值，第二個是BinaryOperator介面。
+  - getAndAccumulate(V x, BinaryOperator<V> accumulatorFunction)：原子性地更新value值，並且傳回AtomicReference更新前的舊值。此方法需要傳入兩個參數，第一個是更新後的新值，第二個是BinaryOperator介面。
+  - accumulateAndGet(V x, BinaryOperator<V> accumulatorFunction)：原子性地更新value值，並且傳回AtomicReference更新後的值。此方法需要傳入兩個參數，第一個是更新的新值，第二個是BinaryOperator介面。
+  - get()：取得AtomicReference的目前物件參考值。
+  - set(V newValue)：設定AtomicReference最新的物件參考值，該新值的更新對其他執行緒立即可見。
+  - lazySet(V newValue)：設定AtomicReference的物件參考值。 lazySet方法的原理已經在AtomicInteger中介紹過了，這裡不再贅述。
+ 
+## 補充
+
+1. volatile  讓執行緒中有可見性, 變量每次更改都可以立即被其他線程看到
+2. sychronize 速度非常慢, 因為其他線程被卡死了
+ 
+https://blog.csdn.net/small_love/article/details/111058977  
