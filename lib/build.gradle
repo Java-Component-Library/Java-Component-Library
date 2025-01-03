@@ -6,3 +6,8 @@ java {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
 }
+
+dependencies {
+    // 添加 RxJava 3 依賴
+    implementation 'io.reactivex.rxjava3:rxjava:3.1.3'
+}
