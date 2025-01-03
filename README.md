@@ -88,6 +88,11 @@ https://blog.csdn.net/csdn_20150804/article/details/103748869
 https://ithelp.ithome.com.tw/m/articles/10205898  
 
 
+## RxSubject
+![image](https://github.com/user-attachments/assets/f8b66e51-5b47-4260-b33a-b984c3097100)
+
+
+
 
 
 
